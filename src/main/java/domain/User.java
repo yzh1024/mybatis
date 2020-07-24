@@ -5,6 +5,7 @@ import java.util.Date;
 
 //实现序列化接口
 public class User implements Serializable {
+
     private Integer id;
     private String username;
     private Date birthday;
