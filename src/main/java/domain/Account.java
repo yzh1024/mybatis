@@ -2,10 +2,21 @@ package domain;
 
 import java.io.Serializable;
 
-public class Accont implements Serializable {
+public class Account implements Serializable {
     private Integer id;
     private Integer uid;
     private Double money;
+
+    //从表实体应该包含一个主表实体的对象引用
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Integer getId() {
         return id;
@@ -33,7 +44,7 @@ public class Accont implements Serializable {
 
     @Override
     public String toString() {
-        return "Accont{" +
+        return "Account{" +
                 "id=" + id +
                 ", uid=" + uid +
                 ", money=" + money +

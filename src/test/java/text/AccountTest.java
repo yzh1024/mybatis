@@ -1,8 +1,7 @@
 package text;
 
 import dao.IAccountDao;
-import dao.IUserDao;
-import domain.Accont;
+import domain.Account;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class AccontTest {
+public class AccountTest {
     private InputStream in;
     private SqlSession sqlSession;
     private IAccountDao accountDao;
@@ -59,9 +58,11 @@ public class AccontTest {
      */
     @Test
     public void testFindAll(){
-        List<Accont> acconts = accountDao.findAll();
-        for (Accont accont : acconts) {
-            System.out.println(accont);
+        List<Account> accounts = accountDao.findAll();
+        for (Account account : accounts) {
+            System.out.println("-------------每个account信息---------------");
+            System.out.println(account);
+            System.out.println(account.getUser());
         }
     }
 }

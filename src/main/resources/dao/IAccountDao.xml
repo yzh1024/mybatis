@@ -5,9 +5,24 @@
 
 <mapper namespace="dao.IAccountDao">
 
-    <!--配置查询所有-->
-    <select id="findAll" resultType="Accont">
-        select * from account
+    <!--定义封装account和user的resultMap-->
+    <resultMap id="accountUserMap" type="Account">
+        <id property="id" column="aid"></id>
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+        <!--一对一的关系映射，配置封装user内容-->
+        <association property="user" column="uid" javaType="user">
+            <id property="id" column="id"></id>
+            <result property="username" column="username"></result>
+            <result property="address" column="address"></result>
+            <result property="sex" column="sex"></result>
+            <result property="birthday" column="birthday"></result>
+        </association>
+    </resultMap>
+
+    <!--查询所有-->
+    <select id="findAll" resultMap="accountUserMap">
+        select u.*,a.id aid,a.uid,a.money from account a,user u where u.id=a.uid;
     </select>
 
 </mapper>
