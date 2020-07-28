@@ -21,6 +21,7 @@ public class MybatiesTest {
     private InputStream in;
     private SqlSession sqlSession;
     private IUserDao userDao;
+    private SqlSessionFactory factory;
 
     /**
      * 初始化操作
@@ -33,7 +34,7 @@ public class MybatiesTest {
         in = Resources.getResourceAsStream("SqlMapConfig.xml");
         //2、创建SqlSessionFactory工厂
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-        SqlSessionFactory factory = builder.build(in);//读取SqlMapConfig.xml中连接数据库和mapper映射信息，用来生产能够真正操作数据库的SqlSession对象
+        factory = builder.build(in);//读取SqlMapConfig.xml中连接数据库和mapper映射信息，用来生产能够真正操作数据库的SqlSession对象
         //3、使用工厂生产一个SqlSession对象
 //        sqlSession = factory.openSession(true);//这里有参数的话，就实现了自动提交commit，后面就不用再写了
         sqlSession = factory.openSession();
@@ -193,6 +194,24 @@ public class MybatiesTest {
     }
 
 
+    /**
+     * 测试一级缓存
+     */
+    @Test
+    public void testFirstLeverCache() {
+        //5、使用代理对象执行查询一个方法
+        User user1 = userDao.findById(48);
+       /* sqlSession.close();
+        //再次获取sqlSession对象
+        sqlSession = factory.openSession();
+        userDao = sqlSession.getMapper(IUserDao.class);*/
+
+       sqlSession.clearCache();//此方法也可以清空缓存
+        User user2 = userDao.findById(48);
+        System.out.println(user1);
+        System.out.println(user2);
+        System.out.println(user1==user2);
+    }
 
 
 
@@ -211,23 +230,7 @@ public class MybatiesTest {
 
 
 
-   /* public static void main(String[] args) throws Exception {
-        //1、读取配置文件，商城字节输入流
-        InputStream in  = Resources.getResourceAsStream("SqlMapConfig.xml");
-        //2、创建SqlSessionFactory工厂
-        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-        SqlSessionFactory factory = builder.build(in);//读取SqlMapConfig.xml中连接数据库和mapper映射信息，用来生产能够真正操作数据库的SqlSession对象
-        //3、使用工厂生产一个SqlSession对象
-        SqlSession session = factory.openSession();
-        //4、使用SqlSession创建Dao接口的代理对象
-        IUserDao userDao = session.getMapper(IUserDao.class);
-        //5、使用代理对象执行方法
-        List<User> users = userDao.findAll();
-        for (User user : users) {
-            System.out.println(user);
-        }
-        //6、释放资源
-        session.close();
-        in.close();
-    }*/
+
+
+
 }

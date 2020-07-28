@@ -9,7 +9,6 @@ resultType：表示我们要封装到哪里去
 parameterType:参数的类型
 -->
 <mapper namespace="dao.IUserDao">
-
     <!--定义User的resultMap-->
     <resultMap id="userAccountMap" type="user">
         <id property="id" column="id"></id>
@@ -30,7 +29,8 @@ parameterType:参数的类型
         select u.*,a.id aid ,a.uid,a.money from user u left outer join account a on u.id = a.uid
     </select>
     
-<!--下面内容是单表操作
+<!--
+&lt;!&ndash;下面内容是单表操作&ndash;&gt;
    
     &lt;!&ndash;sql标签：抽取重复的sql语句&ndash;&gt;
     <sql id="defaultUser">
@@ -108,5 +108,8 @@ parameterType:参数的类型
             </if>
         </where>
     </select>
+
 -->
+
+
 </mapper>
